@@ -46,6 +46,7 @@ class Settings(BaseSettings):
 
     # ======== DATABASE ========
     DATABASE_URL: PostgresDsn
+    SYNC_DATABASE_URL: PostgresDsn
     DATABASE_ECHO: bool = False
     DATABASE_POOL_SIZE: int = 10
     DATABASE_MAX_OVERFLOW: int = 20
