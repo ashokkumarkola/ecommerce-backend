@@ -4,12 +4,20 @@ from sqlalchemy import text
 
 from app.core.config import settings
 from app.core.database import check_db_connection
+from app.core.logging import logger
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
+    # STARTUP
+    logger.info("Starting application...")
+
     await check_db_connection()
-    print("Database connected")
+    logger.info("Database connected")
+    
     yield
+
+    # SHUTDOWN
+    logger.info("Shutting down application...")
 
 app = FastAPI(
     title=settings.APP_NAME,
