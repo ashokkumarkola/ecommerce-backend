@@ -4,6 +4,7 @@ from sqlalchemy import text
 
 from app.core.config import settings
 from app.core.lifespan import lifespan
+from app.core.middleware import LoggingMiddleware, ProcessTimeMiddleware
 from app.core.exceptions import register_exception_handlers
 
 from app.modules.users.routes import router as user_router
@@ -28,6 +29,10 @@ async def root():
         "docs": "/docs",
         "environment": settings.ENVIRONMENT
     }
+
+# MIDDLEWARES
+app.add_middleware(LoggingMiddleware)
+app.add_middleware(ProcessTimeMiddleware)
 
 # EXCEPTION HANDLERS
 register_exception_handlers(app)
