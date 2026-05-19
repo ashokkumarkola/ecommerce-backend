@@ -67,6 +67,16 @@ class Settings(BaseSettings):
     FORMATTER: str = "%(asctime)s - %(name)s - %(levelname)s - %(message)s"
 
     # ======== VALIDATORS ========
+    @field_validator("DEBUG", mode="before")
+    def validate_debug(cls, v):
+        if isinstance(v, str):
+            normalized = v.strip().lower()
+            if normalized in {"release", "prod", "production"}:
+                return False
+            if normalized in {"debug", "dev", "development"}:
+                return True
+        return v
+
     @field_validator("SECRET_KEY", mode="before")
     def validate_secret_key(cls, v):
         if not v or len(v) < 32:

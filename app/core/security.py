@@ -1,0 +1,15 @@
+from pwdlib import PasswordHash
+
+from app.core.config import settings
+
+# PASSWORD CONTEXTS
+
+# Recommended Argon2id context (OWASP standard)
+pwd_context = PasswordHash.recommended()
+
+# Hashing Utilities
+def hash_password(password: str) -> str:
+    return pwd_context.hash(password)
+
+def verify_password(plain_password: str, hashed_password: str) -> bool:
+    return pwd_context.verify(plain_password, hashed_password)
